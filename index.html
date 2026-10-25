@@ -1,0 +1,212 @@
+<title>Cypheeeeer7</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+html, body { margin: 0; }
+/* Layout: left-aligned phone column. A slowly turning cipher disc opens the page, then a big name, then link cards that fill with the accent on press. */
+:root {
+  --bg: #eceff7;
+  --surface: #ffffff;
+  --fg: #0f1426;
+  --muted: #5a6280;
+  --line: #d3d8ea;
+  --accent: #d1470a;
+  --accent-fg: #ffffff;
+  --display: "Syne", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a0e1a;
+    --surface: #121829;
+    --fg: #eef0f8;
+    --muted: #8d95b5;
+    --line: #232b47;
+    --accent: #ffb347;
+    --accent-fg: #1a1204;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --surface: #121829;
+  --fg: #eef0f8;
+  --muted: #8d95b5;
+  --line: #232b47;
+  --accent: #ffb347;
+  --accent-fg: #1a1204;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--display);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+main { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 36px; }
+
+header { display: flex; flex-direction: column; gap: 14px; }
+.disc { width: min(78vw, 290px); aspect-ratio: 1; margin-left: -6px; color: var(--fg); }
+.disc svg { display: block; width: 100%; height: 100%; }
+.disc .ring { fill: none; stroke: var(--line); stroke-width: 1; }
+.disc .ring.hot { stroke: var(--accent); stroke-width: 1.5; }
+.disc .tick { stroke: var(--muted); stroke-width: 1; }
+.disc .out { font-family: var(--mono); font-size: 9.5px; fill: var(--muted); font-weight: 500; }
+.disc .inn { font-family: var(--mono); font-size: 10.5px; fill: var(--fg); font-weight: 500; }
+.disc .core { font-family: var(--display); font-weight: 800; font-size: 30px; fill: #fff; letter-spacing: -0.04em; paint-order: stroke; stroke: rgba(0,0,0,.45); stroke-width: 3px; }
+.spin { transform-origin: 120px 120px; animation: spin 90s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+h1 {
+  margin: 0; font-size: clamp(34px, 11.5vw, 52px); line-height: 1.02;
+  font-weight: 800; letter-spacing: -0.045em; overflow-wrap: anywhere;
+}
+.tag { margin: 0; font-family: var(--mono); font-size: 12.5px; color: var(--muted); letter-spacing: 0.03em; }
+.tag b { color: var(--accent); font-weight: 500; }
+
+.links { display: flex; flex-direction: column; gap: 12px; padding: 0; margin: 0; list-style: none; }
+.row {
+  position: relative; display: flex; align-items: center; gap: 14px; min-width: 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px; color: inherit; text-decoration: none; overflow: hidden;
+  transition: background .18s, color .18s, border-color .18s, transform .18s;
+}
+a.row:hover, a.row:focus-visible, a.row:active { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); transform: translateY(-2px); }
+a.row:hover .txt span, a.row:focus-visible .txt span, a.row:active .txt span,
+a.row:hover .go, a.row:focus-visible .go, a.row:active .go { color: var(--accent-fg); }
+a.row:hover .ico, a.row:focus-visible .ico, a.row:active .ico { background: var(--accent-fg); color: var(--accent); }
+a.row:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ico { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--bg); color: var(--accent); transition: background .18s, color .18s; }
+.ico svg { width: 22px; height: 22px; fill: currentColor; }
+.txt { min-width: 0; flex: 1; display: flex; flex-direction: column; }
+.txt strong { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+.txt span { font-family: var(--mono); font-size: 12px; color: var(--muted); overflow-wrap: anywhere; transition: color .18s; }
+.go { flex: none; color: var(--muted); font-family: var(--mono); font-size: 20px; transition: color .18s; }
+
+.eq { flex: none; display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+.eq i { display: block; width: 3px; height: 100%; background: currentColor; border-radius: 1px; transform-origin: bottom; animation: eq 1.1s ease-in-out infinite; }
+.eq i:nth-child(2) { animation-delay: -.3s; } .eq i:nth-child(3) { animation-delay: -.6s; } .eq i:nth-child(4) { animation-delay: -.9s; }
+@keyframes eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
+
+.copy {
+  flex: none; font-family: var(--mono); font-size: 12px; padding: 9px 13px; border-radius: 10px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer;
+}
+.copy[data-done="1"] { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+
+footer { font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: 0.03em; }
+@media (prefers-reduced-motion: reduce) {
+  .spin, .eq i { animation: none; }
+  .eq i { transform: scaleY(.7); }
+  .row, .ico, .txt span, .go { transition: none; }
+  a.row:hover { transform: none; }
+}
+</style>
+
+<main>
+  <header>
+    <div class="disc" aria-hidden="true">
+      <svg viewBox="0 0 240 240" id="disc">
+        <circle class="ring" cx="120" cy="120" r="117"/>
+        <circle class="ring" cx="120" cy="120" r="92"/>
+        <circle class="ring hot" cx="120" cy="120" r="62"/>
+        <g id="ticks"></g>
+        <g id="outer"></g>
+        <g class="spin"><g id="inner"></g></g>
+        <defs><clipPath id="pc"><circle cx="120" cy="120" r="60"/></clipPath></defs><image href="data:image/jpeg;base64,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" x="60" y="60" width="120" height="120" clip-path="url(#pc)" preserveAspectRatio="xMidYMid slice"/><text class="core" x="120" y="131" text-anchor="middle">C7</text>
+      </svg>
+    </div>
+    <h1 id="name" aria-label="Cypheeeeer7">Cypheeeeer7</h1>
+    <p class="tag"><b>&gt;</b> code, music, Discord</p>
+  </header>
+
+  <ul class="links">
+    <li>
+      <a class="row" href="https://github.com/Cypheeeeer7" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5z"/></svg></span>
+        <span class="txt"><strong>GitHub</strong><span>@Cypheeeeer7</span></span>
+        <span class="go" aria-hidden="true">↗</span>
+      </a>
+    </li>
+    <li>
+      <a class="row" href="https://open.spotify.com/playlist/4v4isuvUHmMtrJNCGCnBZ3" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm5.5 17.3a.75.75 0 0 1-1.03.25c-2.82-1.72-6.37-2.11-10.55-1.16a.75.75 0 1 1-.33-1.46c4.57-1.05 8.5-.6 11.66 1.34.35.22.46.68.25 1.03zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.23-1.98-8.15-2.56-11.97-1.4a.94.94 0 0 1-.55-1.8c4.36-1.32 9.78-.68 13.5 1.6.44.27.58.85.31 1.29zm.13-3.4C15.22 8.35 8.84 8.14 5.15 9.26a1.12 1.12 0 1 1-.65-2.15c4.24-1.29 11.28-1.04 15.73 1.6a1.12 1.12 0 0 1-1.13 1.93z"/></svg></span>
+        <span class="txt"><strong>Playlist</strong><span>Spotify, open and press play</span></span>
+        <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      </a>
+    </li>
+    <li>
+      <div class="row">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.43 2.9a.07.07 0 0 0-.08.04c-.21.38-.44.87-.6 1.26a18.3 18.3 0 0 0-5.5 0c-.17-.4-.4-.88-.62-1.26a.08.08 0 0 0-.08-.04 19.7 19.7 0 0 0-4.89 1.47.07.07 0 0 0-.03.03C.53 9.05-.32 13.58.1 18.06a.08.08 0 0 0 .03.06 19.9 19.9 0 0 0 6 3.03.08.08 0 0 0 .08-.03c.46-.63.87-1.3 1.22-2a.08.08 0 0 0-.04-.1 13 13 0 0 1-1.87-.9.08.08 0 0 1 0-.13l.37-.29a.07.07 0 0 1 .08-.01c3.93 1.8 8.18 1.8 12.07 0a.07.07 0 0 1 .08.01l.37.29a.08.08 0 0 1 0 .13c-.6.35-1.22.65-1.87.9a.08.08 0 0 0-.04.1c.36.7.77 1.37 1.22 2a.08.08 0 0 0 .08.03 19.8 19.8 0 0 0 6-3.03.08.08 0 0 0 .03-.05c.5-5.18-.84-9.67-3.55-13.66a.06.06 0 0 0-.03-.03zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.16-1.08-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg></span>
+        <span class="txt"><strong>Discord</strong><span id="dc-name">userxv2</span></span>
+        <button class="copy" id="copy-dc" type="button">Copy</button>
+      </div>
+    </li>
+    <li>
+      <a class="row" href="https://discord.com/users/1115830280780005428" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg></span>
+        <span class="txt"><strong>Discord profile</strong><span>Open my profile and add me</span></span>
+        <span class="go" aria-hidden="true">↗</span>
+      </a>
+    </li>
+  </ul>
+
+  <footer>caesar shift +7 &middot; A becomes H</footer>
+</main>
+
+<script>
+(function () {
+  /* Cipher disc: fixed outer alphabet, inner alphabet shifted by 7 */
+  var NS = "http://www.w3.org/2000/svg", A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ", SHIFT = 7;
+  function el(tag, attrs, text) {
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text) n.textContent = text;
+    return n;
+  }
+  var ticks = document.getElementById("ticks"), outer = document.getElementById("outer"), inner = document.getElementById("inner");
+  for (var i = 0; i < 26; i++) {
+    var ang = i * 360 / 26;
+    var tg = el("line", { "class": "tick", x1: 120, y1: 3, x2: 120, y2: i % 13 === 0 ? 14 : 9, transform: "rotate(" + ang + " 120 120)" });
+    ticks.appendChild(tg);
+    outer.appendChild(el("text", { "class": "out", x: 120, y: 33, "text-anchor": "middle", transform: "rotate(" + ang + " 120 120)" }, A[i]));
+    inner.appendChild(el("text", { "class": "inn", x: 120, y: 58, "text-anchor": "middle", transform: "rotate(" + ang + " 120 120)" }, A[(i + SHIFT) % 26]));
+  }
+
+  /* Name decodes once on load; the real text is already in the page */
+  var h = document.getElementById("name"), real = "Cypheeeeer7";
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!still) {
+    var pool = "abcdefghijklmnopqrstuvwxyz0123456789#%&", t0 = null, DUR = 900;
+    function frame(t) {
+      if (t0 === null) t0 = t;
+      var p = Math.min(1, (t - t0) / DUR), keep = Math.floor(p * real.length), out = "";
+      for (var j = 0; j < real.length; j++) out += j < keep ? real[j] : pool[Math.floor(Math.random() * pool.length)];
+      h.textContent = p >= 1 ? real : out;
+      if (p < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* Copy Discord username */
+  var btn = document.getElementById("copy-dc"), name = document.getElementById("dc-name");
+  btn.addEventListener("click", function () {
+    var done = function () {
+      btn.textContent = "Copied"; btn.setAttribute("data-done", "1");
+      setTimeout(function () { btn.textContent = "Copy"; btn.removeAttribute("data-done"); }, 1600);
+    };
+    var fallback = function () {
+      try { var r = document.createRange(); r.selectNodeContents(name); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {}
+    };
+    try { navigator.clipboard.writeText("userxv2").then(done, fallback); } catch (e) { fallback(); }
+  });
+})();
+</script>
